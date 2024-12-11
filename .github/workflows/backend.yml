@@ -22,17 +22,21 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
+      working-directory: ./backend
       run: npm install
 
     - name: Run Tests
+      working-directory: ./backend
       run: npm test
 
     - name: Generate Code Coverage
+      working-directory: ./backend
       run: npm run test:coverage
       env:
         CI: true
 
     - name: Upload Coverage Report
+      working-directory: ./backend
       uses: actions/upload-artifact@v3
       with:
         name: code-coverage

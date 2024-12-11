@@ -1,23 +1,26 @@
-# Step 1: Use the official Node.js image as a base image
+# Step 1: Use official Node.js image as base
 FROM node:20
 
-# Step 2: Set the working directory inside the container
+# Step 2: Set the working directory
 WORKDIR /app
 
-# Step 3: Copy the package.json and package-lock.json to the container
+# Step 3: Copy the package.json and package-lock.json for npm install
 COPY package*.json ./
 
-# Step 4: Install the dependencies inside the container
+# Step 4: Install dependencies
 RUN npm install
 
-# Step 5: Copy the rest of your frontend code into the container
+# Step 5: Copy the rest of the frontend code into the container
 COPY . .
 
-# Step 6: Expose port 5000 (for React development server)
-EXPOSE 5000
-
-# Step 7: Build the React application
+# Step 6: Build the React app
 RUN npm run build
 
-# Step 8: Start the React development server (adjust if you're using `npm start`)
-CMD ["npm", "start"]
+# Step 7: Install a simple web server to serve the React app
+RUN npm install -g serve
+
+# Step 8: Expose the port for the frontend (changed to 3000)
+EXPOSE 3000
+
+# Step 9: Serve the React app using the `serve` command
+CMD ["serve", "-s", "build", "-l", "3000"]
