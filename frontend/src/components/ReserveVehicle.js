@@ -34,7 +34,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
       }
     };
     fetchData();
-  }, [token]);
+  }, [token, fetchVehicles]);
 
   useEffect(() => {
     // Fetch user reservation only after `reservations` and `uid` have been set
@@ -163,7 +163,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
             <button onClick={() => handleView(vehicle)} className="view-button">
               View
             </button>
-            {(status != 'reserved' && userReservation == null) ? (
+            {(status !== 'reserved' && userReservation == null) ? (
               <button onClick={() => handleReserve(vehicle.vehicleId)} className="reserve-button">
                 Reserve
               </button>) 
@@ -173,7 +173,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
                 Remove Reserve
               </button>) 
             : (<></>)}
-            {(canRepairVehicle && status != 'reserved') ? (
+            {(canRepairVehicle && status !== 'reserved') ? (
               <button onClick={() => handleRepair(vehicle.vehicleId)} className="view-button">
                 Repair
               </button>) 
@@ -228,7 +228,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
           </tr>
           <tr>
             <td><strong>Status:</strong></td>
-            <td>{(viewVehicle.status != 'available' && viewVehicle.status != 'repair') ?
+            <td>{(viewVehicle.status !== 'available' && viewVehicle.status !== 'repair') ?
             ('reserved by: ' + viewVehicle.status) : viewVehicle.status
             }</td>
           </tr>
@@ -264,7 +264,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
                     (vehicle.status === 'repair' && canViewAllRepairs) ? vehicleTableRow(vehicle, 'repair') : (<></>)
                   ))}
                   {vehicles.map((vehicle, index) => {
-                    if(vehicle.status != 'repair' && vehicle.status != 'available'){
+                    if(vehicle.status !== 'repair' && vehicle.status !== 'available'){
                       if(canViewAllReservations) return vehicleTableRow(vehicle, 'reserved');
 
                       // Check reservation data fetched previously

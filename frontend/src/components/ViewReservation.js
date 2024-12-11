@@ -29,7 +29,7 @@ function ViewRes({token, reservationData}) {
         const userRes = vehicles.find(res => res.vehicleId === reservationData.vehicleId);
         setUserVehicle(userRes);
         }
-    }, [vehicles]);
+    }, [vehicles, reservationData.vehicleId]);
 
     
 

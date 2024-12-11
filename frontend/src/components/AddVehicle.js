@@ -1,5 +1,5 @@
 // components/AddVehicle.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import '../CSS/Profile.css';
 import '../CSS/AddVehicle.css';
