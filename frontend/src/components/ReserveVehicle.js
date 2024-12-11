@@ -34,7 +34,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
       }
     };
     fetchData();
-  }, [token, fetchVehicles]);
+  }, [token]);
 
   useEffect(() => {
     // Fetch user reservation only after `reservations` and `uid` have been set
