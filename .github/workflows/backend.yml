@@ -5,10 +5,10 @@ name: Backend CI
 on:
   push:
     branches:
-      - milos-testovi
+      - main
   pull_request:
     branches:
-      - milos-testovi
+      - main
 
 jobs:
   # Job za gradnjo backenda
@@ -82,6 +82,18 @@ jobs:
 
     - name: Run tests with coverage  # Izvajanje testov s pokritostjo
       run: |
+        echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> backend/.env
+        echo "FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }}" >> backend/.env
+        echo "FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}" >> backend/.env
+        echo "FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}" >> backend/.env
+        echo "FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID }}" >> backend/.env
+        echo "FIREBASE_AUTH_URI=${{ secrets.FIREBASE_AUTH_URI }}" >> backend/.env
+        echo "FIREBASE_TOKEN_URI=${{ secrets.FIREBASE_TOKEN_URI }}" >> backend/.env
+        echo "FIREBASE_AUTH_PROVIDER_CERT_URL=${{ secrets.FIREBASE_AUTH_PROVIDER_CERT_URL }}" >> backend/.env
+        echo "FIREBASE_CLIENT_CERT_URL=${{ secrets.FIREBASE_CLIENT_CERT_URL }}" >> backend/.env
+        echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> backend/.env
+        echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> backend/.env
+        echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> backend/.env
         cd backend
         npm run test:ci
 
