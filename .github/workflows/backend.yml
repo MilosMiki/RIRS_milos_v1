@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Pipeline Backend
 
 on:
   push:
@@ -14,30 +14,30 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # This is correct as it checks out the code
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 18  # This is the correct syntax for setting up Node.js
 
-    - name: Install Dependencies
-      working-directory: ./backend
+    - name: Install Dependencies (Backend)
+      working-directory: ./backend  # This specifies the working directory for backend
       run: npm install
 
-    - name: Run Tests
-      working-directory: ./backend
+    - name: Run Tests (Backend)
+      working-directory: ./backend  # This specifies the working directory for backend
       run: npm test
 
-    - name: Generate Code Coverage
-      working-directory: ./backend
+    - name: Generate Code Coverage (Backend)
+      working-directory: ./backend  # This specifies the working directory for backend
       run: npm run test:coverage
       env:
         CI: true
 
     - name: Upload Coverage Report
-      working-directory: ./backend
-      uses: actions/upload-artifact@v3
+      working-directory: ./backend  # This specifies the working directory for backend
+      uses: actions/upload-artifact@v3  # This action is used correctly here
       with:
         name: code-coverage
         path: coverage/
