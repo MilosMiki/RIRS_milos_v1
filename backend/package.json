@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon index.js",
-    "build": "echo 'Setting NODE_ENV to production' && export NODE_ENV=production"
+    "build": "echo 'Setting NODE_ENV to production' && export NODE_ENV=production",
+    "test:ci": "jest --ci --coverage"
   },
   "keywords": [],
   "author": "",
