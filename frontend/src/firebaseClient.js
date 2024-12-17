@@ -8,5 +8,6 @@ import firebaseConfig from './firebaseConfig';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app); // Initialize Firestore
+console.log("Firebase App Initialized:", app.name);
 
 export { auth, db, signInWithEmailAndPassword, createUserWithEmailAndPassword ,collection, addDoc, doc, setDoc};

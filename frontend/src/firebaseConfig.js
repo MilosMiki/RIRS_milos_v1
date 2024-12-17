@@ -1,10 +1,10 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyCkN8jy9U1CyiZFfvfS9msRIMomQgrME9k",
-    authDomain: "company-vehicle-management.firebaseapp.com",
-    projectId: "company-vehicle-management",
-    storageBucket: "company-vehicle-management.firebasestorage.app",
-    messagingSenderId: "246118144076",
-    appId: "1:246118144076:web:72c6742bf25f6573bbbce9"
-  };
+  apiKey: "AIzaSyDv381tPGB6uWyEHfqV0Dq41g11lRpN2C0",
+  authDomain: "milos-rirs-v1.firebaseapp.com",
+  projectId: "milos-rirs-v1",
+  storageBucket: "milos-rirs-v1.firebasestorage.app",
+  messagingSenderId: "211229588099",
+  appId: "1:211229588099:web:40edc333b439bd178779b6"
+};
 
 export default firebaseConfig;

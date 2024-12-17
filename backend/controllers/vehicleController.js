@@ -20,6 +20,7 @@ async function getVehicles(req,res){
           engine: vehicleData.engine,
           hp: vehicleData.hp,
           status: vehicleData.status,
+          type: vehicleData.type,
         });
     });
     res.status(200).json(vehiclesList);

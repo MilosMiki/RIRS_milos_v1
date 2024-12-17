@@ -7,8 +7,50 @@ describe('Vehicle Controller Tests', () => {
   describe('getVehicles', () => {
     it('should return a list of vehicles when data exists', async () => {
       const mockVehicles = [
-        { vehicleId: '1', vehicleName: 'Car A', status: 'available' },
-        { vehicleId: '2', vehicleName: 'Car B', status: 'repair' },
+        {
+          vehicleId: '1',
+          vehicleName: 'BMW',
+          color: 'Black',
+          year: 2000,
+          image: 'image_url',
+          engine: '316i',
+          hp: 105,
+          status: 'available',
+          type: 'Car',
+        },
+        {
+          vehicleId: '2',
+          vehicleName: 'Piaggio',
+          color: 'Black',
+          year: 2000,
+          image: 'image_url_2',
+          engine: '125cc',
+          hp: 10,
+          status: 'available',
+          type: 'Bike',
+        },
+        {
+          vehicleId: '3',
+          vehicleName: 'Fiat Doblo',
+          color: 'White',
+          year: 2004,
+          image: 'image_url_2',
+          engine: '1.9D',
+          hp: 120,
+          status: 'available',
+          type: 'Van',
+        },
+        {
+          vehicleId: '4',
+          vehicleName: 'Ford Puma',
+          color: 'Gray',
+          year: 2008,
+          image: 'image_url_2',
+          engine: '2.2 HDi',
+          hp: 120,
+          status: 'available',
+          type: 'Truck',
+        },
       ];
 
       db.collection.mockReturnValue({
@@ -16,17 +58,21 @@ describe('Vehicle Controller Tests', () => {
           forEach: (callback) => mockVehicles.forEach((vehicle) => callback({ data: () => vehicle })),
         }),
       });
-
+  
       const req = { user: { uid: '123' } };
       const res = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-
+  
       await getVehicles(req, res);
-
+  
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(mockVehicles);
+  
+      res.json.mock.calls[0][0].forEach((vehicle) => {
+        expect(vehicle).toHaveProperty('type'); //novo dodano polje v collection/test
+      });
     });
   });
 

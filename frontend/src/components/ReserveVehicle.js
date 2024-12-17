@@ -18,6 +18,12 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
   const [uid, setUid] = useState(null);
   const [userReservation, setUserReservation] = useState(null);
 
+  
+  const [bikes, setBikes] = useState(false);
+  const [cars, setCars] = useState(false);
+  const [vans, setVans] = useState(false);
+  const [trucks, setTrucks] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // Start loading
@@ -153,9 +159,51 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
     }
   }
 
+  function canViewType(type){
+    if(!cars && !bikes && !vans && !trucks)
+      return(true);
+    if(type==='Bike')
+      return(bikes);
+    if(type==='Car')
+      return(cars);
+    if(type==='Van')
+      return(vans);
+    if(type==='Truck')
+      return(trucks);
+  }
+
+  function bikesButton(){
+    setBikes(!bikes);
+    setCars(false);
+    setVans(false);
+    setTrucks(false);
+  }
+  
+  function carsButton(){
+    setBikes(false);
+    setCars(!cars);
+    setVans(false);
+    setTrucks(false);
+  }
+  
+  function vansButton(){
+    setBikes(false);
+    setCars(false);
+    setVans(!vans);
+    setTrucks(false);
+  }
+
+  function trucksButton(){
+    setBikes(false);
+    setCars(false);
+    setVans(false);
+    setTrucks(!trucks);
+  }
+
   function vehicleTableRow(vehicle, status){
     return(
       <tr key={vehicle.vehicleId} className={status}>
+        <td>{vehicle.type}</td>
         <td>{vehicle.vehicleName}</td>
         <td>{vehicle.engine} - {vehicle.hp} HP</td>
         <td>
@@ -207,6 +255,10 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
       <table className="vehicle-table">
         <tbody>
           <tr>
+            <td><strong>Type:</strong></td>
+            <td>{viewVehicle.type}</td>
+          </tr>
+          <tr>
             <td><strong>Vehicle Name:</strong></td>
             <td>{viewVehicle.vehicleName}</td>
           </tr>
@@ -251,6 +303,7 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
             <table className="vehicle-table">
               <thead>
                   <tr>
+                      <th>Type</th>
                       <th>Vehicle Name</th>
                       <th>Engine</th>
                       <th>Actions</th>
@@ -258,13 +311,13 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
               </thead>
               <tbody>
                   {vehicles.map((vehicle, index) => (
-                    (vehicle.status === 'available') ? vehicleTableRow(vehicle, 'available') : (<></>)
+                    (vehicle.status === 'available' && canViewType(vehicle.type)) ? vehicleTableRow(vehicle, 'available') : (<></>)
                   ))}
                   {vehicles.map((vehicle, index) => (
-                    (vehicle.status === 'repair' && canViewAllRepairs) ? vehicleTableRow(vehicle, 'repair') : (<></>)
+                    (vehicle.status === 'repair' && canViewAllRepairs && canViewType(vehicle.type)) ? vehicleTableRow(vehicle, 'repair') : (<></>)
                   ))}
                   {vehicles.map((vehicle, index) => {
-                    if(vehicle.status !== 'repair' && vehicle.status !== 'available'){
+                    if(vehicle.status !== 'repair' && vehicle.status !== 'available' && canViewType(vehicle.type)){
                       if(canViewAllReservations) return vehicleTableRow(vehicle, 'reserved');
 
                       // Check reservation data fetched previously
@@ -300,6 +353,28 @@ function Reserve({ token, setShowReserve, setShowAddVehicle, setShowAllCarReserv
             className="goto-register-button"
         >
           View All Reservations
+        </button>
+        )}
+      </div>
+      <div className="button-group">
+        {(
+        <button onClick={() => bikesButton()} className="goto-register-button">
+          Show Bikes only
+        </button>
+        )}
+        {(
+        <button onClick={() => carsButton()} className="goto-register-button">
+          Show Cars only
+        </button>
+        )}
+        {(
+        <button onClick={() => vansButton()} className="goto-register-button">
+          Show Vans only
+        </button>
+        )}
+        {(
+        <button onClick={() => trucksButton()} className="goto-register-button">
+          Show Trucks only
         </button>
         )}
       </div>

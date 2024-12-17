@@ -11,6 +11,7 @@ function AddVehicle({ token, setShowAddVehicle }) {
   const [engine, setEngine] = useState('');
   const [color, setColor] = useState('');
   const [year, setYear] = useState('');
+  const [type, setType] = useState('');
   const [image, setImage] = useState(null);
   const [error, setError] = useState('');
 
@@ -32,6 +33,7 @@ function AddVehicle({ token, setShowAddVehicle }) {
         year,
         image,
         status,
+        type
       };
 
     try {
@@ -51,6 +53,13 @@ function AddVehicle({ token, setShowAddVehicle }) {
     <div className="add-vehicle-container">
       <h2>Add vehicle</h2>
       <form onSubmit={handleAddVehicle}>
+        <input
+          type="vehicleType"
+          placeholder="Vehicle Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="add-vehicle-input"
+        />
         <input
           type="vehicleName"
           placeholder="Vehicle Name"
