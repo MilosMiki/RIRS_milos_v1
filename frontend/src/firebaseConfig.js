@@ -1,3 +1,6 @@
+console.log("FIREBASE_API_KEY:", process.env.FIREBASE_API_KEY); // To see if the key is loaded correctly
+console.log("FIREBASE_AUTH_DOMAIN:", process.env.FIREBASE_AUTH_DOMAIN); // Same for other variables
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
