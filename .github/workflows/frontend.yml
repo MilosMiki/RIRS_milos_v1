@@ -157,4 +157,7 @@ jobs:
         REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}  # Set backend URL for production
       run: |
         cd frontend
-        firebase deploy --only hosting --project ${FIREBASE_PROJECT_ID_FRONTEND} --token $FIREBASE_TOKEN  # Deploy the built app to Firebase Hosting
+        echo "Checking Firebase status..."
+        firebase --version  # Show Firebase CLI version
+        firebase projects:list  # List projects to verify access
+        firebase deploy --only hosting --project ${FIREBASE_PROJECT_ID_FRONTEND} --token $FIREBASE_TOKEN --debug  # Deploy with debug flag
