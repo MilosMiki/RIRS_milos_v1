@@ -10,7 +10,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:3000', // Local development
-  REACT_APP_FRONTEND_URL, // Frontend hosted URL
+  process.env.REACT_APP_FRONTEND_URL, // Frontend hosted URL
 ];
 app.use(cors({
   origin: (origin, callback) => {
