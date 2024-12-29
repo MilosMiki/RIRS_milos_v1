@@ -1,9 +1,5 @@
 const { admin, db } = require('../config/firebaseConfig');
 
-
-// Configure explicitly to trust the frontend project
-const frontendProjectId = process.env.REACT_APP_FRONTEND_URL;
-
 const verifyAuthToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
 
@@ -15,8 +11,9 @@ const verifyAuthToken = async (req, res, next) => {
     console.log('Token received:', token); // Log the token
     const decodedToken = await admin.auth().verifyIdToken(token, true);
     
-    if (process.env.NODE_ENV !== 'test' && decodedToken.aud !== frontendProjectId) {
-      throw new Error('Token does not belong to the expected frontend project');
+    const expectedAudience = process.env.FIREBASE_PROJECT_ID;  
+    if (process.env.NODE_ENV !== 'test' && decodedToken.aud !== expectedAudience) {
+      throw new Error(`Token audience mismatch. Expected: ${expectedAudience}, but got: ${decodedToken.aud}`);
     }
     req.user = decodedToken;
 
