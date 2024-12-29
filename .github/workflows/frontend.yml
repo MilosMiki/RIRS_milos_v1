@@ -155,6 +155,15 @@ jobs:
       run: |
         firebase use --add ${FIREBASE_PROJECT_ID_FRONTEND}  # Set the active project for the Firebase CLI
 
+    - name: Print environment variables
+      run: |
+        echo "FIREBASE_TOKEN: $FIREBASE_TOKEN"
+        echo "REACT_APP_BACKEND_URL: $REACT_APP_BACKEND_URL"
+
+    - name: Check Firebase Project Configuration
+      run: |
+        cat frontend/firebase.json
+
     - name: Deploy to Firebase Hosting
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Use the pre-generated token
