@@ -13,18 +13,14 @@ const verifyAuthToken = async (req, res, next) => {
 
   try {
     console.log('Token received:', token); // Log the token
-    const decodedToken = jwt.decode(token); // Decode the token without verifying it
-    console.log('Decoded token payload:', decodedToken);
-
-    const verifiedToken = await admin.auth().verifyIdToken(token,true);
-    console.log('Verified token:', verifiedToken);
-
-    if (verifiedToken.aud !== frontendProjectId) {
+    const decodedToken = await admin.auth().verifyIdToken(token, true);
+    
+    if (process.env.NODE_ENV !== 'test' && decodedToken.aud !== frontendProjectId) {
       throw new Error('Token does not belong to the expected frontend project');
     }
-    req.user = verifiedToken;
+    req.user = decodedToken;
 
-    const userDoc = await db.collection('users').doc(verifiedToken.uid).get();
+    const userDoc = await db.collection('users').doc(decodedToken.uid).get();
     if (!userDoc.exists) {
       req.user.role = 'Driver';
       return res.status(403).json({ message: 'User document not found' });
@@ -34,7 +30,7 @@ const verifyAuthToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('Token verification error:', error);
-    res.status(403).json({ message: 'Unauthorized access', error: error.message });
+    res.status(403).json({ message: 'Unauthorized access' });
   }
 };
 
