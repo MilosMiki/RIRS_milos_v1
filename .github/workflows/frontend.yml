@@ -138,7 +138,7 @@ jobs:
   
   # Deploy to Firebase Hosting
   deploy-firebase:
-    needs: test-frontend
+    needs: build-frontend
     runs-on: ubuntu-latest
     environment: Production
     if: github.ref == 'refs/heads/main' 
@@ -151,14 +151,9 @@ jobs:
       run: |
         curl -sL https://firebase.tools | bash
 
-    - name: Authenticate with Firebase
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      run: |
-        firebase login:ci --token $FIREBASE_TOKEN
-
     - name: Deploy to Firebase Hosting
       env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Use the pre-generated token
         REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}  # Set backend URL for production
       run: |
         cd frontend
