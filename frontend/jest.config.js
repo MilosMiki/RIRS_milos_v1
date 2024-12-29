@@ -7,5 +7,5 @@ module.exports = {
     "\\.svg$": "<rootDir>/__mocks__/fileMock.js",
   },
   testEnvironment: "jsdom",
-  setupFiles: ["jest-fetch-mock", "<rootDir>/jest.setup.js", "dotenv/config"],
+  setupFiles: ["jest-fetch-mock", "dotenv/config"],
 };
