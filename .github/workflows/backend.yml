@@ -105,7 +105,7 @@ jobs:
 
   # Gradnja Docker slike in nalaganje na Docker Hub - Development
   dockerize-and-push-dev:
-    needs: test-frontend
+    needs: test-backend
     runs-on: ubuntu-latest
     environment: Development
     if: github.ref == 'refs/heads/main' 
