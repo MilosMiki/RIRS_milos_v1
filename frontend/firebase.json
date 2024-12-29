@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "frontend/build",  // Points to the newly created build folder
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
