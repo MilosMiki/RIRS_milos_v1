@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyDv381tPGB6uWyEHfqV0Dq41g11lRpN2C0",
-  authDomain: "milos-rirs-v1.firebaseapp.com",
-  projectId: "milos-rirs-v1",
-  storageBucket: "milos-rirs-v1.firebasestorage.app",
-  messagingSenderId: "211229588099",
-  appId: "1:211229588099:web:40edc333b439bd178779b6"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID_FRONTEND,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 
 export default firebaseConfig;

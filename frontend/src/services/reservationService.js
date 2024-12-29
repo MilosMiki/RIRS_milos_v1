@@ -1,5 +1,6 @@
 // services/resrvationService.js
-const API_URL = 'http://localhost:5000/api/reservation';
+const apiUrl = process.env.REACT_APP_BACKEND_URL;
+const API_URL = `${apiUrl}/api/reservation`;
 
 // Fetch all reservations
 export const getReservationData = async (token) => {

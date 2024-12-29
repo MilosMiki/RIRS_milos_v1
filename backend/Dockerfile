@@ -18,6 +18,7 @@ RUN npm run build
 
 # Step 7: Expose the port for the backend
 EXPOSE 5000
+EXPOSE 8080
 
 # Step 8: Start the backend server
 CMD ["npm", "run", "start"]

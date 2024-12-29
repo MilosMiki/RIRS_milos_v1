@@ -102,3 +102,21 @@ jobs:
       with:
         name: backend-coverage  # Ime artefakta
         path: backend/coverage/  # Pot do poročila o pokritosti kode
+
+    - name: Set up Google Cloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev .
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy backend-service \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev \
+          --region europe-west3 \
+          --allow-unauthenticated

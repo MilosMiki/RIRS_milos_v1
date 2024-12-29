@@ -1,5 +1,6 @@
 // services/vehicleService.js
-const API_URL = 'http://localhost:5000/api/vehicle';
+const apiUrl = process.env.REACT_APP_BACKEND_URL;
+const API_URL = `${apiUrl}/api/vehicle`;
 
 // Fetch vehicle data
 export const getVehicleData = async (token) => {

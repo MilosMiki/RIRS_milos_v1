@@ -8,9 +8,19 @@ const reimbursementRoutes = require('./routes/reimbursementRoutes');
 
 const app = express();
 
-
-
-app.use(cors({ origin: 'http://localhost:3000' }));
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  REACT_APP_FRONTEND_URL, // Frontend hosted URL
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 app.use(express.json()); // Parse incoming JSON data
 
 app.use('/api/auth', authRoutes);
@@ -19,7 +29,7 @@ app.use('/api/reservation', reservationRoutes);
 app.use('/api/reimbursements', reimbursementRoutes);
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
