@@ -8,16 +8,16 @@ const verifyAuthToken = async (req, res, next) => {
   }
 
   try {
+    console.log('Token received:', token); // Log the token
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
 
-    // Fetch role directly from Firestore
     const userDoc = await db.collection('users').doc(decodedToken.uid).get();
-    if (userDoc.exists) {
-      req.user.role = userDoc.data().role || 'Driver'; // Default to Driver
-    } else {
+    if (!userDoc.exists) {
       req.user.role = 'Driver';
+      return res.status(403).json({ message: 'User document not found' });
     }
+    req.user.role = userDoc.data().role || 'Driver'; // Default to Driver
 
     next();
   } catch (error) {
