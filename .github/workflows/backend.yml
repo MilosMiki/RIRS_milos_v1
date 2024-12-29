@@ -111,7 +111,7 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev .
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev ./backend
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev
 
     - name: Deploy to Cloud Run
