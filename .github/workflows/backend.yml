@@ -144,4 +144,5 @@ jobs:
         gcloud run deploy backend-service \
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/backend:dev \
           --region europe-west3 \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --set-env-vars FIREBASE_PRIVATE_KEY="${{ secrets.FIREBASE_PRIVATE_KEY }}"
