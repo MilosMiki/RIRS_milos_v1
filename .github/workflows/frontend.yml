@@ -141,7 +141,7 @@ jobs:
     needs: build-frontend
     runs-on: ubuntu-latest
     environment: Production
-    if: github.ref == 'refs/heads/main' 
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: Checkout code
@@ -150,19 +150,6 @@ jobs:
     - name: Install Firebase CLI
       run: |
         curl -sL https://firebase.tools | bash
-
-    - name: Set Firebase project
-      run: |
-        firebase use --add ${FIREBASE_PROJECT_ID_FRONTEND}  # Set the active project for the Firebase CLI
-
-    - name: Print environment variables
-      run: |
-        echo "FIREBASE_TOKEN: $FIREBASE_TOKEN"
-        echo "REACT_APP_BACKEND_URL: $REACT_APP_BACKEND_URL"
-
-    - name: Check Firebase Project Configuration
-      run: |
-        cat frontend/firebase.json
 
     - name: Deploy to Firebase Hosting
       env:
