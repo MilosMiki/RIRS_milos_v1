@@ -137,27 +137,28 @@ jobs:
         publish_dir: ./docs
   
   # Deploy to Firebase Hosting
-  deploy-firebase:
+
+  # Deploy na Firebase Hosting
+  deploy-to-firebase:
     needs: build-frontend
     runs-on: ubuntu-latest
-    environment: Production
-    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Firebase CLI
-      run: |
-        curl -sL https://firebase.tools | bash
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-build
+        path: frontend/build/
 
-    - name: Deploy to Firebase Hosting
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Use the pre-generated token
-        REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}  # Set backend URL for production
+    - name: Setup Firebase CLI
       run: |
         cd frontend
-        echo "Checking Firebase status..."
-        firebase --version  # Show Firebase CLI version
-        firebase projects:list  # List projects to verify access
-        firebase deploy --only hosting --project ${FIREBASE_PROJECT_ID_FRONTEND} --token $FIREBASE_TOKEN --debug  # Deploy with debug flag
+        npm install -g firebase-tools
+
+    - name: Deploy to Firebase Hosting
+      run: |
+        cd frontend
+        firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
